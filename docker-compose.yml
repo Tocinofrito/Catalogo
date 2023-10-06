@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:latest
+    container_name: mi-base-de-datos
+    environment:
+      POSTGRES_USER: ismadiaz2304
+      POSTGRES_PASSWORD: gralPass
+      POSTGRES_DB: catestados
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
