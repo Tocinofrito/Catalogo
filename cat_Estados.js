@@ -33,34 +33,38 @@ fs.readFile('config.json', 'utf8', (err, data) =>{
         }
         console.log('Conexión lograda a la bd');
     })
-    app.get('/consulta',(req, res) =>{
-        //Obtenemos parámetro de la url cuando no hay parámetro
-        
-        const {id} = req.query;
-        if(!id){
+    app.get('/consulta/:tipo/:id?',(req, res) =>{
+        const tipo = req.params.tipo;
+        const id = req.params.id; 
+        //Comprobamos tipo de consulta 1 y retornamos todos los datos en la bd
+        if(id === '1') {
             const query = "SELECT * FROM cat_estados";
-        client.query(query, (err, result) =>{
-            if(err){
+            client.query(query, (err, result) =>{
+                if(err){
                 console.error('Error en la consulta:', err);
-                res.status(500).json({error:'Error en la consulta'});
-            }else{
-                //Devolvemos los resultados como JSON
-                res.json(result.rows)
-            }
-        })    
-        }
-        //Realizamos la consulta cuando hay parámetro id
+                    res.status(500).json({error:'Error en la consulta'});
+                }else{
+                 //Devolvemos los resultados como JSON
+                    res.json(result.rows)
+                }  
+            })
+        }else if(tipo === '2' && id){
+                
+        
+        
+         //Realizamos la consulta cuando hay parámetro id
 
         const query = "SELECT * FROM cat_estados WHERE id_estado= $1";
-        client.query(query, [id], (err, result) =>{
-            if(err){
-                console.error('Error en la consulta:', err);
-                res.status(500).json({error:'Error en la consulta'});
-            }else{
-                //Devolvemos los resultados como JSON
-                res.json(result.rows)
-            }
-        })
+            client.query(query, [id], (err, result) =>{
+                if(err){
+                    console.error('Error en la consulta:', err);
+                    res.status(500).json({error:'Error en la consulta'});
+                }else{
+                 //Devolvemos los resultados como JSON
+                    res.json(result.rows)
+                }
+            })
+        }
     })
 });
 
