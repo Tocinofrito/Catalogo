@@ -3,5 +3,6 @@
     "port": 5432,
     "user": "ismadiaz2304",
     "password": "gralPass",
-    "database": "catestados"
+    "database": "catestados",
+    "secretKey": "SuperSecretKey"
 }
